@@ -1,4 +1,4 @@
-FROM ruby:latest
+FROM ruby:2.3
 
 # Install system dependencies
 RUN apt-get update -qq && apt-get -qq install -y \
