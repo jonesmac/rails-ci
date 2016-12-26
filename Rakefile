@@ -80,13 +80,13 @@ namespace :deploy do
   end
   
   desc 'Builds & pushes ruby-2.3 image to the registry'
-  task :latest do
+  task :ruby_2_3 do
     Rake::Task['build:ruby_2_3'].invoke
     Rake::Task['push:ruby_2_3'].invoke
   end
   
   desc 'Builds & pushes ruby-2.4 image to the registry'
-  task :latest do
+  task :ruby_2_4 do
     Rake::Task['build:ruby_2_4'].invoke
     Rake::Task['push:ruby_2_4'].invoke
   end
