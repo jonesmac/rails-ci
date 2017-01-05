@@ -22,7 +22,8 @@ All images contain:
   - imagemagick
   - libmariadbd-dev
   - libpq-dev
-- [node 7.3.0](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V7.md#7.3.0)
+  - xz-utils
+- [node 7.4.0](https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V7.md#7.4.0)
 - [phantomjs 2.1.1](http://phantomjs.org/)
 - [bundler config](https://bundler.io/v1.13/man/bundle-config.1.html)
   - `disable_exec_load=true` (see [bundler/bundler#5005](https://github.com/bundler/bundler/issues/5005))
