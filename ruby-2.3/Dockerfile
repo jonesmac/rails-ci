@@ -9,8 +9,8 @@ RUN apt-get update -qq && apt-get -qq install -y \
 # https://hub.docker.com/_/docker/
 
 ENV DOCKER_BUCKET get.docker.com
-ENV DOCKER_VERSION 17.03.0-ce
-ENV DOCKER_SHA256 4a9766d99c6818b2d54dc302db3c9f7b352ad0a80a2dc179ec164a3ba29c2d3e
+ENV DOCKER_VERSION 17.04.0-ce
+ENV DOCKER_SHA256 c52cff62c4368a978b52e3d03819054d87bcd00d15514934ce2e0e09b99dd100
 
 RUN set -x \
 	&& curl -fSL "https://${DOCKER_BUCKET}/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz" -o docker.tgz \
