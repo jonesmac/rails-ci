@@ -2,7 +2,8 @@ FROM ruby:latest
 
 # Install system dependencies
 RUN apt-get update -qq && apt-get -qq install -y \
-    curl ca-certificates bzip2 imagemagick libfontconfig libmariadbd-dev libpq-dev xz-utils \
+    curl ca-certificates bzip2 imagemagick libfontconfig \
+    libmariadbd-dev libpq-dev mariadb-client postgresql-client xz-utils \
     --no-install-recommends && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Docker
@@ -35,7 +36,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 RUN npm set progress=false && \
     npm install -g --progress=false yarn && \
     npm cache clean
-  
+
 # Install phantomjs
 ENV PHANTOMJS_VERSION 2.1.1
 
@@ -44,12 +45,12 @@ RUN curl -SLO "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-$PHANTO
     && tar -jxvf "phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2" -C "phantomjs-$PHANTOMJS_VERSION-linux-x86_64" --strip-components=1 \
     && mv "phantomjs-$PHANTOMJS_VERSION-linux-x86_64/bin/phantomjs" /usr/local/bin \
     && rm -rf "phantomjs-$PHANTOMJS_VERSION-linux-x86_64" "phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2"
-    
+
 # Bug with bundler 1.13
 # See: https://github.com/bundler/bundler/issues/5005
 RUN bundle config disable_exec_load true
 
-# Use HTTPS instead of SSH 
+# Use HTTPS instead of SSH
 RUN bundle config github.https true
 
 # Set Rails to run in production
