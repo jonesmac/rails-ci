@@ -1,5 +1,9 @@
 FROM ruby:latest
 
+# Add Official Postgres Repo
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+    && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+
 # Install system dependencies
 RUN apt-get update -qq && apt-get -qq install -y \
     curl ca-certificates bzip2 imagemagick libfontconfig \
