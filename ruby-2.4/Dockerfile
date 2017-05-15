@@ -14,17 +14,21 @@ RUN apt-get update -qq && apt-get -qq install -y \
 # https://hub.docker.com/_/docker/
 
 ENV DOCKER_BUCKET get.docker.com
-ENV DOCKER_VERSION 17.04.0-ce
-ENV DOCKER_SHA256 c52cff62c4368a978b52e3d03819054d87bcd00d15514934ce2e0e09b99dd100
+ENV DOCKER_VERSION 17.05.0-ce
+ENV DOCKER_SHA256_x86_64 340e0b5a009ba70e1b644136b94d13824db0aeb52e09071410f35a95d94316d9
+ENV DOCKER_SHA256_armel 59bf474090b4b095d19e70bb76305ebfbdb0f18f33aed2fccd16003e500ed1b7
+ENV DOCKER_ARCH x86_64
 
-RUN set -x \
-	&& curl -fSL "https://${DOCKER_BUCKET}/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz" -o docker.tgz \
-	&& echo "${DOCKER_SHA256} *docker.tgz" | sha256sum -c - \
-	&& tar -xzvf docker.tgz \
-	&& mv docker/* /usr/local/bin/ \
-	&& rmdir docker \
-	&& rm docker.tgz \
-	&& docker -v
+RUN set -ex; \
+  	curl -fSL "https://${DOCKER_BUCKET}/builds/Linux/${DOCKER_ARCH}/docker-${DOCKER_VERSION}.tgz" -o docker.tgz; \
+    # /bin/sh doesn't support ${!...} :(
+    sha256="DOCKER_SHA256_${DOCKER_ARCH}"; sha256="$(eval "echo \$${sha256}")"; \
+    echo "${sha256} *docker.tgz" | sha256sum -c -; \
+    tar -xzvf docker.tgz; \
+    mv docker/* /usr/local/bin/; \
+    rmdir docker; \
+    rm docker.tgz; \
+    docker -v
 
 # Node
 # https://hub.docker.com/_/node/
