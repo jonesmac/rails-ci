@@ -13,20 +13,22 @@ RUN apt-get update -qq && apt-get -qq install -y \
 # Docker
 # https://hub.docker.com/_/docker/
 
-ENV DOCKER_BUCKET get.docker.com
-ENV DOCKER_VERSION 17.05.0-ce
-ENV DOCKER_SHA256_x86_64 340e0b5a009ba70e1b644136b94d13824db0aeb52e09071410f35a95d94316d9
-ENV DOCKER_SHA256_armel 59bf474090b4b095d19e70bb76305ebfbdb0f18f33aed2fccd16003e500ed1b7
+ENV DOCKER_CHANNEL stable
+ENV DOCKER_VERSION 17.06.0-ce
+# TODO ENV DOCKER_SHA256
+# https://github.com/docker/docker-ce/blob/5b073ee2cf564edee5adca05eee574142f7627bb/components/packaging/static/hash_files !!
+# (no SHA file artifacts on download.docker.com yet as of 2017-06-07 though)
 ENV DOCKER_ARCH x86_64
 
 RUN set -ex; \
-  	curl -fSL "https://${DOCKER_BUCKET}/builds/Linux/${DOCKER_ARCH}/docker-${DOCKER_VERSION}.tgz" -o docker.tgz; \
-    # /bin/sh doesn't support ${!...} :(
-    sha256="DOCKER_SHA256_${DOCKER_ARCH}"; sha256="$(eval "echo \$${sha256}")"; \
-    echo "${sha256} *docker.tgz" | sha256sum -c -; \
-    tar -xzvf docker.tgz; \
-    mv docker/* /usr/local/bin/; \
-    rmdir docker; \
+    if ! curl -fL -o docker.tgz "https://download.docker.com/linux/static/${DOCKER_CHANNEL}/${DOCKER_ARCH}/docker-${DOCKER_VERSION}.tgz"; then \
+      echo >&2 "error: failed to download 'docker-${DOCKER_VERSION}' from '${DOCKER_CHANNEL}' for '${DOCKER_ARCH}'"; \
+      exit 1; \
+    fi; \
+    tar --extract \
+		  --file docker.tgz \
+		  --strip-components 1 \
+		  --directory /usr/local/bin/; \
     rm docker.tgz; \
     docker -v
 
