@@ -36,7 +36,7 @@ RUN set -ex; \
 # https://hub.docker.com/_/node/
 
 ENV NPM_CONFIG_LOGLEVEL error
-ENV NODE_VERSION 8.1.1
+ENV NODE_VERSION 8.1.3
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
