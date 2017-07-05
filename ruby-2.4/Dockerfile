@@ -45,7 +45,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 
 RUN npm set progress=false && \
     npm install -g --progress=false yarn && \
-    npm cache clean
+    npm cache clean --force
 
 # Install phantomjs
 ENV PHANTOMJS_VERSION 2.1.1
