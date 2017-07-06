@@ -1,4 +1,6 @@
-FROM ruby:2.4
+# Lock to 2.4.0 until parser can be updated
+# See: https://github.com/whitequark/parser/issues/346
+FROM ruby:2.4.0
 
 # Add Official Postgres Repo
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
