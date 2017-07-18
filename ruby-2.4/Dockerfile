@@ -2,7 +2,9 @@
 # See: https://github.com/whitequark/parser/issues/346
 FROM ruby:2.4.0
 
-RUN gem install bundler
+# Add MariaDB Repo
+RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db \
+    && sh -c 'echo "deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.2/debian jessie main" >> /etc/apt/sources.list.d/mariadb.list'
 
 # Add Official Postgres Repo
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
@@ -59,6 +61,8 @@ RUN curl -SLO "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-$PHANTO
     && tar -jxvf "phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2" -C "phantomjs-$PHANTOMJS_VERSION-linux-x86_64" --strip-components=1 \
     && mv "phantomjs-$PHANTOMJS_VERSION-linux-x86_64/bin/phantomjs" /usr/local/bin \
     && rm -rf "phantomjs-$PHANTOMJS_VERSION-linux-x86_64" "phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2"
+
+RUN gem install bundler
 
 # Bug with bundler 1.13
 # See: https://github.com/bundler/bundler/issues/5005
