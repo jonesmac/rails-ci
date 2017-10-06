@@ -12,7 +12,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
 
 # Install system dependencies
 RUN apt-get update -qq && apt-get -qq install -y \
-    curl ca-certificates bzip2 imagemagick jq libfontconfig \
+    curl ca-certificates bzip2 imagemagick jq libfontconfig libzmq \
     libmariadbd-dev libpq-dev mariadb-client postgresql-client xz-utils \
     --no-install-recommends && apt-get clean && rm -rf /var/lib/apt/lists/*
 
