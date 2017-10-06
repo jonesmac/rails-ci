@@ -22,6 +22,7 @@ All images contain:
   - imagemagick
   - libmariadbd-dev
   - libpq-dev
+  - libzmq 
   - xz-utils
 - [docker](https://www.docker.com/)
 - [node](https://nodejs.org/)
